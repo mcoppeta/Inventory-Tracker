@@ -1,5 +1,6 @@
 package main.ui;
 
+import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
@@ -8,6 +9,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import main.resources.UserResources;
+import main.structures.User;
 
 public class TitleScreen extends StackPane {
 
@@ -25,8 +28,13 @@ public class TitleScreen extends StackPane {
         VBox userSelection = new VBox(30);
         userSelection.setAlignment(Pos.CENTER);
 
-        ObservableList<String> options = FXCollections.observableArrayList("1", "2");
-        ComboBox combo = new ComboBox(options);
+        ObservableList<User> users = UserResources.getUsers();
+        ReadOnlyListWrapper<String> usernames = new ReadOnlyListWrapper<>();
+        usernames.set(FXCollections.observableArrayList());
+        for (User u : users) {
+            usernames.add(u.getName());
+        }
+        ComboBox combo = new ComboBox(usernames);
         combo.getSelectionModel().selectFirst();
 
         userSelection.getChildren().addAll(combo);
