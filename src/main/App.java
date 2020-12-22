@@ -3,14 +3,15 @@ package main;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.ui.TitleScreen;
 
 public class App extends Application {
-    private int width = 1300;
-    private int height = 675;
+    private int width = 800;
+    private int height = 400;
 
     @Override
     public void start(Stage primaryStage) {
-
+        TitleScreen root = new TitleScreen();
 
         Scene scene = new Scene(root, width, height);
 
