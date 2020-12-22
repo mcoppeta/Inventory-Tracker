@@ -48,25 +48,29 @@ public class TitleScreen extends StackPane {
         password.setPromptText("Enter Password");
 
         userSelection.getChildren().addAll(combo);
+
+        //Back in initial pane
+        Button btn = new Button("Create User");
+
+        pane.getChildren().addAll(blank, title, userSelection, btn);
+
+        //Combo
         combo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 if (newValue.equals("<new user>")) {
                     if (userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().remove(password);
+                        btn.textProperty().set("Create User");
                     }
                 } else {
                     if (!userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().add(password);
+                        btn.textProperty().set("Login");
                     }
                 }
             }
         });
-
-        //Back in initial pane
-        Button temp = new Button("Next");
-
-        pane.getChildren().addAll(blank, title, userSelection, temp);
 
         this.getChildren().add(pane);
     }
