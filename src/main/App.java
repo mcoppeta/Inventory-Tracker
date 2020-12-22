@@ -26,8 +26,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        users.add(new User("A", "1"));
-        users.add(new User("B", "2"));
         launch(args);
     }
 }
