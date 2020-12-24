@@ -41,6 +41,23 @@ public class UserResources {
     }
 
     /**
+     * If given proper login info, it returns the User
+     * @param username Given username
+     * @param password Given password
+     * @return User associated with the login information, null if invalid
+     */
+    public static User validLogin(String username, String password) {
+        for (User u : users) {
+            if (u.getName().equals(username)) {
+                if (u.getPassword().equals(password)) {
+                    return u;
+                }
+            }
+        }
+        return null;
+    }
+
+    /**
      * Method adds a new user to the arraylist
      */
     public static void addUser(User u) {

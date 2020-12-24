@@ -53,9 +53,16 @@ public class TitleScreen extends StackPane {
 
         Button loginButton = new Button("Login");
         loginButton.setOnAction(e -> {
-            Alert waterAlert = new Alert(Alert.AlertType.WARNING);
-            waterAlert.setContentText("log in");
-            waterAlert.showAndWait();
+            String username = combo.getSelectionModel().getSelectedItem();
+            String pw = password.getText().trim();
+            User logged = UserResources.validLogin(username, pw);
+            if (logged != null) {
+                getScene().setRoot(new InventoryScreen(logged));
+            } else {
+                Alert error = new Alert(Alert.AlertType.WARNING);
+                error.setContentText("Incorrect Password for User");
+                error.showAndWait();
+            }
         });
 
         //Button initially set to createProfileButton

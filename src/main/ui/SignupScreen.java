@@ -71,6 +71,7 @@ public class SignupScreen extends StackPane {
                     } else { //Password is valid
                         User newUser = new User(name, password);
                         UserResources.addUser(newUser);
+                        getScene().setRoot(new InventoryScreen(newUser));
                     }
                 } else {
                     Alert unusableNameAlert = new Alert(Alert.AlertType.WARNING);
