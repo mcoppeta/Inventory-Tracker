@@ -3,6 +3,7 @@ package main;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import main.resources.UserResources;
 import main.structures.User;
 import main.ui.TitleScreen;
 
@@ -16,6 +17,8 @@ public class App extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        UserResources.init(); //todo remove this after user storage is implemented
+
         TitleScreen root = new TitleScreen();
 
         Scene scene = new Scene(root, width, height);
