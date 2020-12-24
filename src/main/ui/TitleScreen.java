@@ -13,6 +13,7 @@ import main.resources.UserResources;
 import main.structures.User;
 
 public class TitleScreen extends StackPane {
+    private Button btn;
 
     /**
      * Creates the title screen
@@ -45,7 +46,22 @@ public class TitleScreen extends StackPane {
         userSelection.getChildren().addAll(combo);
 
         //Back in initial pane
-        Button btn = new Button("Create Profile");
+        Button createProfileButton = new Button("Create Profile");
+        createProfileButton.setOnAction(e -> {
+                getScene().setRoot(new SignupScreen()); //switch to sign up screen
+        });
+
+        Button loginButton = new Button("Login");
+        loginButton.setOnAction(e -> {
+            Alert waterAlert = new Alert(Alert.AlertType.WARNING);
+            waterAlert.setContentText("log in");
+            waterAlert.showAndWait();
+        });
+
+        //Button initially set to createProfileButton
+        btn = new Button();
+        btn.setText(createProfileButton.getText());
+        btn.setOnAction(createProfileButton.getOnAction());
 
         pane.getChildren().addAll(blank, title, userSelection, btn);
 
@@ -58,24 +74,17 @@ public class TitleScreen extends StackPane {
                 if (newValue.equals("<new profile>")) {
                     if (userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().remove(password);
-                        btn.textProperty().set("Create Profile");
-                        btn.setOnAction(e -> {
-                            getScene().setRoot(new SignupScreen()); //switch to sign up screen
-                        });
+                        System.out.println(createProfileButton.getText());
+                        btn.setText(createProfileButton.getText());
+                        btn.setOnAction(createProfileButton.getOnAction());
                     } else {
                         displayError(); //something went wrong
                     }
                 } else { //Login as an existing user
                     if (!userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().add(password);
-                        btn.textProperty().set("Login");
-                        btn.setOnAction(e -> {
-                            Alert waterAlert = new Alert(Alert.AlertType.WARNING);
-                            waterAlert.setContentText("log in");
-                            waterAlert.showAndWait();
-                        });
-                    } else {
-                        displayError(); //something went wrong
+                        btn.setText(loginButton.getText());
+                        btn.setOnAction(loginButton.getOnAction());
                     }
                 }
             }
