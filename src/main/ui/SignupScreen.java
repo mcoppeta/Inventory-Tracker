@@ -7,7 +7,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
-import org.w3c.dom.Text;
 
 /**
  * Creates a screen to set up a new profile
