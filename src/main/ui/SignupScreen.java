@@ -9,6 +9,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import main.resources.UserResources;
+import main.structures.User;
 
 /**
  * Creates a screen to set up a new profile
@@ -59,6 +60,23 @@ public class SignupScreen extends StackPane {
                 Alert invalidNameAlert = new Alert(Alert.AlertType.WARNING);
                 invalidNameAlert.setContentText("Invalid Name");
                 invalidNameAlert.showAndWait();
+                usernameField.setText("");
+            } else { //name is format-valid
+                String password = passwordField.getText().trim();
+                if (UserResources.validUsername(name)) { // Username is valid and unused -> check password
+                    if (password.equals("")) { //invalid password
+                        Alert invalidPasswordAlert = new Alert(Alert.AlertType.WARNING);
+                        invalidPasswordAlert.setContentText("Invalid Password");
+                        invalidPasswordAlert.showAndWait();
+                    } else { //Password is valid
+                        User newUser = new User(name, password);
+                        UserResources.addUser(newUser);
+                    }
+                } else {
+                    Alert unusableNameAlert = new Alert(Alert.AlertType.WARNING);
+                    unusableNameAlert.setContentText("This Username is Already Being Used");
+                    unusableNameAlert.showAndWait();
+                }
             }
         });
 
