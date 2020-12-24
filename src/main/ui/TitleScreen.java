@@ -6,10 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import main.resources.UserResources;
@@ -60,11 +57,21 @@ public class TitleScreen extends StackPane {
                     if (userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().remove(password);
                         btn.textProperty().set("Create User");
+                        btn.setOnAction(e -> {
+                            Alert waterAlert = new Alert(Alert.AlertType.WARNING);
+                            waterAlert.setContentText("create user");
+                            waterAlert.showAndWait();
+                        });
                     }
                 } else {
                     if (!userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().add(password);
                         btn.textProperty().set("Login");
+                        btn.setOnAction(e -> {
+                            Alert waterAlert = new Alert(Alert.AlertType.WARNING);
+                            waterAlert.setContentText("log in");
+                            waterAlert.showAndWait();
+                        });
                     }
                 }
             }
