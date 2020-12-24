@@ -32,7 +32,7 @@ public class TitleScreen extends StackPane {
         ObservableList<User> users = UserResources.getUsers();
         ReadOnlyListWrapper<String> usernames = new ReadOnlyListWrapper<>();
         usernames.set(FXCollections.observableArrayList());
-        usernames.add("<new user>");
+        usernames.add("<new profile>");
         for (User u : users) {
             usernames.add(u.getName());
         }
@@ -45,7 +45,7 @@ public class TitleScreen extends StackPane {
         userSelection.getChildren().addAll(combo);
 
         //Back in initial pane
-        Button btn = new Button("Create User");
+        Button btn = new Button("Create Profile");
 
         pane.getChildren().addAll(blank, title, userSelection, btn);
 
@@ -53,17 +53,19 @@ public class TitleScreen extends StackPane {
         combo.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                if (newValue.equals("<new user>")) {
+
+                //Create a new user
+                if (newValue.equals("<new profile>")) {
                     if (userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().remove(password);
-                        btn.textProperty().set("Create User");
+                        btn.textProperty().set("Create Profile");
                         btn.setOnAction(e -> {
-                            Alert waterAlert = new Alert(Alert.AlertType.WARNING);
-                            waterAlert.setContentText("create user");
-                            waterAlert.showAndWait();
+                            getScene().setRoot(new SignupScreen()); //switch to sign up screen
                         });
+                    } else {
+                        displayError(); //something went wrong
                     }
-                } else {
+                } else { //Login as an existing user
                     if (!userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().add(password);
                         btn.textProperty().set("Login");
@@ -72,11 +74,22 @@ public class TitleScreen extends StackPane {
                             waterAlert.setContentText("log in");
                             waterAlert.showAndWait();
                         });
+                    } else {
+                        displayError(); //something went wrong
                     }
                 }
             }
         });
 
         this.getChildren().add(pane);
+    }
+
+    /**
+     * Displays a straightfoward error alert
+     */
+    private void displayError() {
+        Alert error = new Alert(Alert.AlertType.WARNING);
+        error.setContentText("Something went wrong");
+        error.showAndWait();
     }
 }
