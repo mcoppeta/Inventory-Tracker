@@ -1,31 +1,35 @@
 package main.ui;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import main.structures.User;
 
-//todo may not extend stackpane
-public class InventoryScreen extends StackPane {
+public class InventoryScreen extends BorderPane {
     private User user; //The user that is logged in
 
     /**
      * Creates InventoryScreen -> The main screen
      */
     public InventoryScreen(User user) {
-        // Main pane holds everything
-        VBox mainPane = new VBox();
-
-        // Top bar to contain welcome message and settings button
-        HBox topPane = new HBox();
+        AnchorPane topPane = new AnchorPane();
 
         Label message = new Label();
         message.setText("Welcome, " + user.getName() + "!");
 
-        topPane.getChildren().addAll(message);
+        Button settingsButton = new Button("Settings");
 
-        mainPane.getChildren().addAll(topPane);
-        this.getChildren().add(mainPane);
+        double topMargin = 10.0;
+
+        topPane.getChildren().addAll(message, settingsButton);
+        topPane.setTopAnchor(message, topMargin);
+        topPane.setTopAnchor(settingsButton, topMargin);
+        topPane.setLeftAnchor(message, topMargin);
+        topPane.setRightAnchor(settingsButton, topMargin);
+
+        this.setTop(topPane);
+
     }
 }
