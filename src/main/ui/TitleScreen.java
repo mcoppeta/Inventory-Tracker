@@ -81,7 +81,6 @@ public class TitleScreen extends StackPane {
                 if (newValue.equals("<new profile>")) {
                     if (userSelection.getChildren().contains(password)) {
                         userSelection.getChildren().remove(password);
-                        System.out.println(createProfileButton.getText());
                         btn.setText(createProfileButton.getText());
                         btn.setOnAction(createProfileButton.getOnAction());
                     } else {
