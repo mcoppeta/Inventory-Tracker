@@ -3,7 +3,10 @@ package main.resources;
 import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import main.structures.Category;
 import main.structures.User;
+
+import java.util.ArrayList;
 
 public class UserResources {
     private static ReadOnlyListWrapper<User> users;
@@ -14,10 +17,16 @@ public class UserResources {
     public static void init() {
         users = new ReadOnlyListWrapper<>();
         users.set(FXCollections.observableArrayList());
-        users.add(new User("A", "1"));
+        User a = new User("A", "1");
+        ArrayList<Category> aCat = new ArrayList<>();
+        aCat.add(new Category("C1"));
+        aCat.add(new Category("C2"));
+        a.setCategories(aCat);
+        users.add(a);
         users.add(new User("B", "2"));
     }
 
+    //todo this needs to be redone later
     /**
      * Returns list of all Users
      * @return ObservableList of Users

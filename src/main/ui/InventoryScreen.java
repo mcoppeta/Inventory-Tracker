@@ -1,7 +1,10 @@
 package main.ui;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import main.structures.User;
 
@@ -12,6 +15,7 @@ public class InventoryScreen extends BorderPane {
      * Creates InventoryScreen -> The main screen
      */
     public InventoryScreen(User user) {
+        // Top Pane
         AnchorPane topPane = new AnchorPane();
 
         Label message = new Label();
@@ -28,6 +32,15 @@ public class InventoryScreen extends BorderPane {
         topPane.setRightAnchor(settingsButton, topMargin);
 
         this.setTop(topPane);
+
+        // Center Content
+        HBox centerPane = new HBox();
+
+        ObservableList<String> categoryTitles = user.getCategoryTitles();
+        ListView categoryDisplay = new ListView(categoryTitles);
+
+        centerPane.getChildren().addAll(categoryDisplay);
+        this.setCenter(centerPane);
 
     }
 }
