@@ -1,5 +1,7 @@
 package main.ui;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
@@ -36,10 +38,36 @@ public class InventoryScreen extends BorderPane {
         // Center Content
         HBox centerPane = new HBox();
 
-        ObservableList<String> categoryTitles = user.getCategoryTitles();
-        ListView categoryDisplay = new ListView(categoryTitles);
+        // Category Pane
+        VBox categoryBox = new VBox();
 
-        centerPane.getChildren().addAll(categoryDisplay);
+        ObservableList<String> categoryTitles = user.getCategoryTitles();
+        ListView<String> categoryDisplay = new ListView<>(categoryTitles);
+
+        Button newCategoryButton = new Button("<New Category>");
+
+        categoryBox.getChildren().addAll(categoryDisplay, newCategoryButton);
+
+        // Items Pane
+        VBox itemBox = new VBox();
+
+        ObservableList<String> itemTitles = FXCollections.observableArrayList();
+        categoryDisplay.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                itemTitles.clear();
+                for (String title : user.getCorrespondingCategory(newValue).getItemTitles()) {
+                    itemTitles.add(title);
+                }
+            }
+        });
+        ListView<String> itemDisplay = new ListView<>(itemTitles);
+
+        Button newItemButton = new Button("<New Item>");
+
+        itemBox.getChildren().addAll(itemDisplay, newItemButton);
+
+        centerPane.getChildren().addAll(categoryBox, itemBox);
         this.setCenter(centerPane);
 
     }

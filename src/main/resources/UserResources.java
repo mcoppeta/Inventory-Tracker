@@ -4,6 +4,7 @@ import javafx.beans.property.ReadOnlyListWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import main.structures.Category;
+import main.structures.Item;
 import main.structures.User;
 
 import java.util.ArrayList;
@@ -19,9 +20,19 @@ public class UserResources {
         users.set(FXCollections.observableArrayList());
         User a = new User("A", "1");
         ArrayList<Category> aCat = new ArrayList<>();
-        aCat.add(new Category("C1"));
-        aCat.add(new Category("C2"));
+        Category ac1 = new Category("C1");
+        aCat.add(ac1);
+        Category ac2 = new Category("C2");
+        aCat.add(ac2);
         a.setCategories(aCat);
+        ArrayList<Item> a1Items = new ArrayList<>();
+        a1Items.add(new Item("C1I1"));
+        a1Items.add(new Item("C1I2"));
+        ArrayList<Item> a2Items = new ArrayList<>();
+        a2Items.add(new Item("C2I1"));
+        a2Items.add(new Item("C2I2"));
+        ac1.setItems(a1Items);
+        ac2.setItems(a2Items);
         users.add(a);
         users.add(new User("B", "2"));
     }
