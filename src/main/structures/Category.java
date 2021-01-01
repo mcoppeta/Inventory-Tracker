@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Category {
     private String title;
     private ArrayList<Item> items;
-    public int num = 5; //todo remove this
 
     public Category(String title) {
         this.title = title;
@@ -51,10 +50,5 @@ public class Category {
             }
         }
         return null;
-    }
-
-    //todo remove this
-    public int getNum() {
-        return num;
     }
 }
