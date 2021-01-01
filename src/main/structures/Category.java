@@ -11,6 +11,7 @@ public class Category {
 
     public Category(String title) {
         this.title = title;
+        items = new ArrayList<>();
     }
 
     public String getTitle() {

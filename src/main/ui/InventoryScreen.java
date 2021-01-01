@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -43,15 +44,26 @@ public class InventoryScreen extends BorderPane {
         VBox categoryBox = new VBox();
 
         ObservableList<String> categoryTitles = user.getCategoryTitles();
-        ListView<String> categoryDisplay = new ListView<>(categoryTitles);
+        ListView<String> categoryDisplay = new ListView<>();
+        categoryDisplay.setItems(categoryTitles);
 
+        // New Category Button
         Button newCategoryButton = new Button("<New Category>");
         newCategoryButton.setOnAction(e -> {
             EntryAlert newCategoryAlert = new EntryAlert();
             newCategoryAlert.display("New Category", "Enter Category Name",
                     "category name", "Add Category");
             Category newCategory = new Category(newCategoryAlert.getInput());
-            user.addCategory(newCategory);
+
+            if (user.addCategory(newCategory)) {
+                Alert y = new Alert(Alert.AlertType.WARNING);
+                y.setContentText(newCategory.getTitle());
+                y.showAndWait();
+            } else {
+                Alert error = new Alert(Alert.AlertType.WARNING);
+                error.setContentText("This category could not be added");
+                error.showAndWait();
+            }
         });
 
         categoryBox.getChildren().addAll(categoryDisplay, newCategoryButton);

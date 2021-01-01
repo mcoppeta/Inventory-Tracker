@@ -9,11 +9,13 @@ public class User {
     private String title;
     private String password;
     private ArrayList<Category> categories;
+    private ObservableList<String> categoryTitles;
 
     public User(String title, String password) {
         this.title = title;
         this.password = password;
         categories = new ArrayList<>();
+        categoryTitles = FXCollections.observableArrayList();
     }
 
     public String getTitle() {
@@ -24,21 +26,17 @@ public class User {
         return categories;
     }
 
+    public ObservableList<String> getCategoryTitles() {
+        return categoryTitles;
+    }
+
     //todo keep?
     public void setCategories(ArrayList<Category> list) {
         categories = list;
-    }
-
-    /**
-     * Retrieve a observableArrayList of the String titles of all categories
-     * @return observableArrayList of Category titles
-     */
-    public ObservableList<String> getCategoryTitles() {
-        ObservableList<String> list = FXCollections.observableArrayList();
-        for (Category c : categories) {
-            list.add(c.getTitle());
+        for (Category c : list) {
+            categoryTitles.clear();
+            categoryTitles.add(c.getTitle());
         }
-        return list;
     }
 
     /**
@@ -67,6 +65,7 @@ public class User {
             }
         }
         categories.add(newCategory);
+        categoryTitles.add(newCategory.getTitle());
         return true;
     }
 

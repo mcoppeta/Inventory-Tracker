@@ -32,7 +32,7 @@ public class EntryAlert {
 
         Button exitBtn = new Button(btnText);
         exitBtn.setOnAction(e -> {
-            this.input = entry.getSelectedText();
+            this.input = entry.getText().trim();
             win.close();
         });
 
