@@ -6,18 +6,18 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class User {
-    private String name;
+    private String title;
     private String password;
     private ArrayList<Category> categories;
 
-    public User(String name, String password) {
-        this.name = name;
+    public User(String title, String password) {
+        this.title = title;
         this.password = password;
         categories = new ArrayList<>();
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public ArrayList<Category> getCategories() {
@@ -55,7 +55,36 @@ public class User {
         return null;
     }
 
+    /**
+     * Adds new category to the categories collection
+     * @param newCategory The category to be added
+     * @return true if successful, false otherwise
+     */
+    public boolean addCategory(Category newCategory) {
+        for (Category c : categories) {
+            if (newCategory.equals(c)) {
+                return false;
+            }
+        }
+        categories.add(newCategory);
+        return true;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        } else if (this == other) {
+            return true;
+        } else if (other instanceof Category) {
+            if (this.title.equals(((Category) other).getTitle())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

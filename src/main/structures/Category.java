@@ -51,4 +51,34 @@ public class Category {
         }
         return null;
     }
+
+    /**
+     * Adds new item to category
+     * @param newItem The item to add
+     * @return true if successful, false otherwise
+     */
+    public boolean addItem(Item newItem) {
+        for (Item i : items) {
+            if (i.equals(newItem)) {
+                return false;
+            }
+        }
+
+        items.add(newItem);
+        return true;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == null) {
+            return false;
+        } else if (other == this) {
+            return true;
+        } else if (other instanceof Item) {
+            if (this.title.equals(((Item) other).getTitle())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
