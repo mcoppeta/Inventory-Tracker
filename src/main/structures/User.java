@@ -33,8 +33,8 @@ public class User {
     //todo keep?
     public void setCategories(ArrayList<Category> list) {
         categories = list;
+        categoryTitles.clear();
         for (Category c : list) {
-            categoryTitles.clear();
             categoryTitles.add(c.getTitle());
         }
     }
@@ -53,6 +53,7 @@ public class User {
         return null;
     }
 
+    //todo fix this for duplicates
     /**
      * Adds new category to the categories collection
      * @param newCategory The category to be added

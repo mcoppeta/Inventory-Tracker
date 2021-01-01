@@ -56,9 +56,7 @@ public class InventoryScreen extends BorderPane {
             Category newCategory = new Category(newCategoryAlert.getInput());
 
             if (user.addCategory(newCategory)) {
-                Alert y = new Alert(Alert.AlertType.WARNING);
-                y.setContentText(newCategory.getTitle());
-                y.showAndWait();
+                //success
             } else {
                 Alert error = new Alert(Alert.AlertType.WARNING);
                 error.setContentText("This category could not be added");
