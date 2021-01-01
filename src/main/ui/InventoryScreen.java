@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
+import main.structures.Category;
 import main.structures.User;
 
 public class InventoryScreen extends BorderPane {
@@ -45,6 +46,13 @@ public class InventoryScreen extends BorderPane {
         ListView<String> categoryDisplay = new ListView<>(categoryTitles);
 
         Button newCategoryButton = new Button("<New Category>");
+        newCategoryButton.setOnAction(e -> {
+            EntryAlert newCategoryAlert = new EntryAlert();
+            newCategoryAlert.display("New Category", "Enter Category Name",
+                    "category name", "Add Category");
+            Category newCategory = new Category(newCategoryAlert.getInput());
+            user.addCategory(newCategory);
+        });
 
         categoryBox.getChildren().addAll(categoryDisplay, newCategoryButton);
 
