@@ -35,7 +35,7 @@ public class TitleScreen extends StackPane {
         usernames.set(FXCollections.observableArrayList());
         usernames.add("<new profile>");
         for (User u : users) {
-            usernames.add(u.getTitle());
+            usernames.add(u.getName());
         }
         ComboBox<String> combo = new ComboBox(usernames);
         combo.getSelectionModel().selectFirst();

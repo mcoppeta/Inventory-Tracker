@@ -6,20 +6,20 @@ import javafx.collections.ObservableList;
 import java.util.ArrayList;
 
 public class User {
-    private String title;
+    private String name;
     private String password;
     private ArrayList<Category> categories;
     private ObservableList<String> categoryTitles;
 
     public User(String title, String password) {
-        this.title = title;
+        this.name = title;
         this.password = password;
         categories = new ArrayList<>();
         categoryTitles = FXCollections.observableArrayList();
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
     public ArrayList<Category> getCategories() {
@@ -76,15 +76,13 @@ public class User {
 
     @Override
     public boolean equals(Object other) {
-        if (other == null) {
-            return false;
-        } else if (this == other) {
+        if (this == other) {
             return true;
-        } else if (other instanceof Category) {
-            if (this.title.equals(((Category) other).getTitle())) {
-                return true;
-            }
         }
-        return false;
+        if (!(other instanceof User)) {
+            return false;
+        }
+
+        return name.equals(((User) other).getName()); //todo replace if necessary
     }
 }

@@ -75,8 +75,8 @@ public class Category {
             return false;
         } else if (other == this) {
             return true;
-        } else if (other instanceof Item) {
-            if (this.title.equals(((Item) other).getTitle())) {
+        } else if (other instanceof Category) {
+            if (this.title.equals(((Category) other).getTitle())) {
                 return true;
             }
         }

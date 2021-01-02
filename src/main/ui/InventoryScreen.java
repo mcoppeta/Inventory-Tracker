@@ -23,7 +23,7 @@ public class InventoryScreen extends BorderPane {
         AnchorPane topPane = new AnchorPane();
 
         Label message = new Label();
-        message.setText("Welcome, " + user.getTitle() + "!");
+        message.setText("Welcome, " + user.getName() + "!");
 
         Button settingsButton = new Button("Settings");
 

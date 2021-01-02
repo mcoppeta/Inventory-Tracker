@@ -53,7 +53,7 @@ public class UserResources {
      */
     public static boolean validUsername(String name) {
         for (User u : users) {
-            if (u.getTitle().equals(name)) {
+            if (u.getName().equals(name)) {
                 return false;
             }
         }
@@ -68,7 +68,7 @@ public class UserResources {
      */
     public static User validLogin(String username, String password) {
         for (User u : users) {
-            if (u.getTitle().equals(username)) {
+            if (u.getName().equals(username)) {
                 if (u.getPassword().equals(password)) {
                     return u;
                 }
