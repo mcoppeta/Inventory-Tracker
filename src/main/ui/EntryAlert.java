@@ -10,7 +10,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class EntryAlert {
-    private String input = null;
+    private String input = "";
 
     /**
      * Displays the entry alert box

@@ -60,6 +60,10 @@ public class User {
      * @return true if successful, false otherwise
      */
     public boolean addCategory(Category newCategory) {
+        if (newCategory.getTitle().trim().equals("")) {
+            return false;
+        }
+
         for (Category c : categories) {
             if (newCategory.equals(c)) {
                 return false;
