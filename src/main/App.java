@@ -24,6 +24,8 @@ public class App extends Application {
         Scene scene = new Scene(root, width, height);
 
         primaryStage.setTitle("Inventory Tracker");
+        primaryStage.setMinWidth(width);
+        primaryStage.setMinHeight(height);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
