@@ -71,21 +71,28 @@ public class InventoryScreen extends BorderPane {
         Button removeCategoryButton = new Button("Remove Category");
         removeCategoryButton.setOnAction(e -> {
             String selectedCategoryTitle = categoryDisplay.getSelectionModel().getSelectedItem();
-            if (selectedCategoryTitle == null || selectedCategoryTitle.equals("")) {
+            if (selectedCategoryTitle == null || selectedCategoryTitle.equals("")) { //unselected category
                 Alert error = new Alert(Alert.AlertType.WARNING);
                 error.setContentText("Must select a category to remove (getSelectedItem returns \"\" or null)");
                 error.showAndWait();
             }
+            else {
 
-            Category selectedCategory = user.getCorrespondingCategory(selectedCategoryTitle);
+                Category selectedCategory = user.getCorrespondingCategory(selectedCategoryTitle);
 
+                ProceedAlertScreen proceedAlert = new ProceedAlertScreen();
+                String proceedMessage = "Are you sure you want to delete the \"" + selectedCategoryTitle
+                        + "\" category and all items it contains?";
+                proceedAlert.display("Remove Category?", proceedMessage, "Remove Category");
 
-            if (user.removeCategory(selectedCategory) == null) { // removes category
-                Alert error = new Alert(Alert.AlertType.WARNING);
-                error.setContentText("Something went wrong (getCorrespondingCategory returned null)");
-                error.showAndWait();
+                if (proceedAlert.getProceed()) { //remove category
+                    if (user.removeCategory(selectedCategory) == null) { // removes category
+                        Alert error = new Alert(Alert.AlertType.WARNING);
+                        error.setContentText("Something went wrong (getCorrespondingCategory returned null)");
+                        error.showAndWait();
+                    }
+                }
             }
-
         });
 
         HBox categoryButtons = new HBox();
