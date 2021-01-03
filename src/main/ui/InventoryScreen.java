@@ -44,12 +44,14 @@ public class InventoryScreen extends BorderPane {
         // Category Pane
         VBox categoryBox = new VBox();
 
+        Label categoryPaneTitle = new Label("Catgeories");
+
         ObservableList<String> categoryTitles = user.getCategoryTitles();
         ListView<String> categoryDisplay = new ListView<>();
         categoryDisplay.setItems(categoryTitles);
 
         // New Category Button
-        Button newCategoryButton = new Button("<New Category>");
+        Button newCategoryButton = new Button("New Category");
         newCategoryButton.setOnAction(e -> {
             NewCategoryScreen newCategoryAlert = new NewCategoryScreen();
             newCategoryAlert.display("New Category", "Enter Category Name",
@@ -65,17 +67,43 @@ public class InventoryScreen extends BorderPane {
             }
         });
 
-        categoryBox.getChildren().addAll(categoryDisplay, newCategoryButton);
+        // Remove Category Button
+        Button removeCategoryButton = new Button("Remove Category");
+        removeCategoryButton.setOnAction(e -> {
+            String selectedCategoryTitle = categoryDisplay.getSelectionModel().getSelectedItem();
+            if (selectedCategoryTitle == null || selectedCategoryTitle.equals("")) {
+                Alert error = new Alert(Alert.AlertType.WARNING);
+                error.setContentText("Must select a category to remove (getSelectedItem returns \"\" or null)");
+                error.showAndWait();
+            }
+
+            Category selectedCategory = user.getCorrespondingCategory(selectedCategoryTitle);
+
+
+            if (user.removeCategory(selectedCategory) == null) { // removes category
+                Alert error = new Alert(Alert.AlertType.WARNING);
+                error.setContentText("Something went wrong (getCorrespondingCategory returned null)");
+                error.showAndWait();
+            }
+
+        });
+
+        HBox categoryButtons = new HBox();
+        categoryButtons.getChildren().addAll(newCategoryButton, removeCategoryButton);
+
+        categoryBox.getChildren().addAll(categoryPaneTitle, categoryDisplay, categoryButtons);
 
         // Items Pane
         VBox itemBox = new VBox();
+
+        Label itemPaneTitle = new Label("Items");
 
         ObservableList<String> itemTitles = FXCollections.observableArrayList();
         ListView<String> itemDisplay = new ListView<>();
         itemDisplay.setItems(itemTitles);
 
         // New Item Button
-        Button newItemButton = new Button("<New Item>");
+        Button newItemButton = new Button("New Item");
         newItemButton.setOnAction(e -> {
             NewItemScreen newItemAlert = new NewItemScreen();
             newItemAlert.display(user);
@@ -89,10 +117,9 @@ public class InventoryScreen extends BorderPane {
                 error.setContentText("This item could not be added");
                 error.showAndWait();
             }
-
         });
 
-        itemBox.getChildren().addAll(itemDisplay, newItemButton);
+        itemBox.getChildren().addAll(itemPaneTitle, itemDisplay, newItemButton);
 
         centerPane.getChildren().addAll(categoryBox, itemBox);
         this.setCenter(centerPane);
@@ -102,7 +129,11 @@ public class InventoryScreen extends BorderPane {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
                 Category current = user.getCorrespondingCategory(categoryDisplay.getSelectionModel().getSelectedItem());
-                itemDisplay.setItems(current.getItemTitles());
+                if (current != null) {
+                    itemDisplay.setItems(current.getItemTitles());
+                } else {
+                    itemDisplay.setItems(FXCollections.observableArrayList());
+                }
             }
         });
     }

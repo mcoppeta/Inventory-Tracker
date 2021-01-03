@@ -74,6 +74,21 @@ public class User {
         return true;
     }
 
+    /**
+     * Removes category from categories collection
+     * @param toRemove The category to remove
+     * @return The removed category if successful, null otherwise
+     */
+    public Category removeCategory(Category toRemove) {
+        if (categories.contains(toRemove)) {
+            Category tr = categories.get(categories.indexOf(toRemove));
+            categories.remove(toRemove);
+            categoryTitles.remove(toRemove.getTitle());
+            return tr;
+        }
+        return null;
+    }
+
     public String getPassword() {
         return password;
     }
