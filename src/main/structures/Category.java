@@ -8,14 +8,20 @@ import java.util.ArrayList;
 public class Category {
     private String title;
     private ArrayList<Item> items;
+    private ObservableList<String> itemTitles;
 
     public Category(String title) {
         this.title = title;
         items = new ArrayList<>();
+        itemTitles = FXCollections.observableArrayList();
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public ObservableList<String> getItemTitles() {
+        return itemTitles;
     }
 
     public ArrayList<Item> getItems() {
@@ -25,18 +31,10 @@ public class Category {
     //todo remove this eventually?
     public void setItems(ArrayList<Item> list) {
         items = list;
-    }
-
-    /**
-     * Retrieve list of Item titles
-     * @return ObservableList of Strings of Item titles
-     */
-    public ObservableList<String> getItemTitles() {
-        ObservableList<String> list = FXCollections.observableArrayList();
+        itemTitles.clear();
         for (Item i : items) {
-            list.add(i.getTitle());
+            itemTitles.add(i.getTitle());
         }
-        return list;
     }
 
     /**
@@ -59,6 +57,10 @@ public class Category {
      * @return true if successful, false otherwise
      */
     public boolean addItem(Item newItem) {
+        if (newItem.getTitle().trim().equals("")) {
+            return false;
+        }
+
         for (Item i : items) {
             if (i.equals(newItem)) {
                 return false;
@@ -66,6 +68,7 @@ public class Category {
         }
 
         items.add(newItem);
+        itemTitles.add(newItem.getTitle());
         return true;
     }
 

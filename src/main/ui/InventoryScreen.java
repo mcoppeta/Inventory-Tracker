@@ -50,7 +50,7 @@ public class InventoryScreen extends BorderPane {
         // New Category Button
         Button newCategoryButton = new Button("<New Category>");
         newCategoryButton.setOnAction(e -> {
-            EntryAlert newCategoryAlert = new EntryAlert();
+            NewCategoryAlert newCategoryAlert = new NewCategoryAlert();
             newCategoryAlert.display("New Category", "Enter Category Name",
                     "category name", "Add Category");
             Category newCategory = new Category(newCategoryAlert.getInput());
@@ -70,17 +70,10 @@ public class InventoryScreen extends BorderPane {
         VBox itemBox = new VBox();
 
         ObservableList<String> itemTitles = FXCollections.observableArrayList();
-        categoryDisplay.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                itemTitles.clear();
-                for (String title : user.getCorrespondingCategory(newValue).getItemTitles()) {
-                    itemTitles.add(title);
-                }
-            }
-        });
-        ListView<String> itemDisplay = new ListView<>(itemTitles);
+        ListView<String> itemDisplay = new ListView<>();
+        itemDisplay.setItems(itemTitles);
 
+        // New Item Button
         Button newItemButton = new Button("<New Item>");
 
         itemBox.getChildren().addAll(itemDisplay, newItemButton);
@@ -88,5 +81,13 @@ public class InventoryScreen extends BorderPane {
         centerPane.getChildren().addAll(categoryBox, itemBox);
         this.setCenter(centerPane);
 
+        // Listener for category changes, to get corresponding item changes
+        categoryDisplay.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                Category current = user.getCorrespondingCategory(categoryDisplay.getSelectionModel().getSelectedItem());
+                itemDisplay.setItems(current.getItemTitles());
+            }
+        });
     }
 }
