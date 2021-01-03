@@ -73,11 +73,10 @@ public class InventoryScreen extends BorderPane {
             String selectedCategoryTitle = categoryDisplay.getSelectionModel().getSelectedItem();
             if (selectedCategoryTitle == null || selectedCategoryTitle.equals("")) { //unselected category
                 Alert error = new Alert(Alert.AlertType.WARNING);
-                error.setContentText("Must select a category to remove (getSelectedItem returns \"\" or null)");
+                error.setContentText("Must select a category to remove");
                 error.showAndWait();
             }
             else {
-
                 Category selectedCategory = user.getCorrespondingCategory(selectedCategoryTitle);
 
                 ProceedAlertScreen proceedAlert = new ProceedAlertScreen();
@@ -88,13 +87,14 @@ public class InventoryScreen extends BorderPane {
                 if (proceedAlert.getProceed()) { //remove category
                     if (user.removeCategory(selectedCategory) == null) { // removes category
                         Alert error = new Alert(Alert.AlertType.WARNING);
-                        error.setContentText("Something went wrong (getCorrespondingCategory returned null)");
+                        error.setContentText("Something went wrong (removeCategory returned null)");
                         error.showAndWait();
                     }
                 }
             }
         });
 
+        // Category Pane Organization
         HBox categoryButtons = new HBox();
         categoryButtons.getChildren().addAll(newCategoryButton, removeCategoryButton);
 
@@ -126,7 +126,38 @@ public class InventoryScreen extends BorderPane {
             }
         });
 
-        itemBox.getChildren().addAll(itemPaneTitle, itemDisplay, newItemButton);
+        Button removeItemButton = new Button("Remove Item");
+        removeItemButton.setOnAction(e -> {
+            String selectedItemTitle = itemDisplay.getSelectionModel().getSelectedItem();
+            if (selectedItemTitle == null || selectedItemTitle.equals("")) { //unselected item
+                Alert error = new Alert(Alert.AlertType.WARNING);
+                error.setContentText("Must select an item to remove");
+                error.showAndWait();
+            }
+            else {
+                Category selectedCategory = user.getCorrespondingCategory(
+                        categoryDisplay.getSelectionModel().getSelectedItem()); //won't fail because category must be selected to select an item
+                Item selectedItem = selectedCategory.getCorrespondingItem(selectedItemTitle); //won't fail
+
+                ProceedAlertScreen proceedAlert = new ProceedAlertScreen();
+                String removeItemMessage = "Are you sure you want to remove \"" + selectedItem.getTitle()
+                        + "\" from the \"" + selectedCategory.getTitle() + "\" category?";
+                proceedAlert.display("Remove Item?", removeItemMessage, "Remove Item");
+
+                if (proceedAlert.getProceed()) { //remove item
+                    if (selectedCategory.removeItem(selectedItem) == null) { //removes item
+                        Alert error = new Alert(Alert.AlertType.WARNING);
+                        error.setContentText("Something went wrong (removeItem returned null)");
+                        error.showAndWait();
+                    }
+                }
+            }
+        });
+
+        HBox itemButtons = new HBox();
+        itemButtons.getChildren().addAll(newItemButton, removeItemButton);
+
+        itemBox.getChildren().addAll(itemPaneTitle, itemDisplay, itemButtons);
 
         centerPane.getChildren().addAll(categoryBox, itemBox);
         this.setCenter(centerPane);

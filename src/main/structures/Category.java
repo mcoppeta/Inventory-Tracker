@@ -72,6 +72,21 @@ public class Category {
         return true;
     }
 
+    /**
+     * Removes Item from Category
+     * @param toRemove The Item to remove
+     * @return The removed Item on success, null otherwise
+     */
+    public Item removeItem(Item toRemove) {
+        if (items.contains(toRemove)) {
+            Item tr = items.get(items.indexOf(toRemove));
+            items.remove(toRemove);
+            itemTitles.remove(toRemove.getTitle());
+            return tr;
+        }
+        return null;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == null) {

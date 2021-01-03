@@ -14,7 +14,7 @@ public class Item {
     @Override
     public boolean equals(Object other) {
         if (this == other) {
-            return false;
+            return true;
         }
         if (!(other instanceof Item)) {
             return false;
