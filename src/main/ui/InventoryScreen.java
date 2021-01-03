@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import main.structures.Category;
+import main.structures.Item;
 import main.structures.User;
 
 public class InventoryScreen extends BorderPane {
@@ -75,6 +76,21 @@ public class InventoryScreen extends BorderPane {
 
         // New Item Button
         Button newItemButton = new Button("<New Item>");
+        newItemButton.setOnAction(e -> {
+            NewItemScreen newItemAlert = new NewItemScreen();
+            newItemAlert.display(user);
+            Item newItem = new Item(newItemAlert.getInput());
+            Category selectedCategory = user.getCorrespondingCategory(newItemAlert.getSelectedCategory());
+
+            if (selectedCategory.addItem(newItem)) {
+                // success
+            } else {
+                Alert error = new Alert(Alert.AlertType.WARNING);
+                error.setContentText("This item could not be added");
+                error.showAndWait();
+            }
+
+        });
 
         itemBox.getChildren().addAll(itemDisplay, newItemButton);
 
