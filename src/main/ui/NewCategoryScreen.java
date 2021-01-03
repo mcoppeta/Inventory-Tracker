@@ -9,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-public class NewCategoryAlert {
+public class NewCategoryScreen {
     private String input = "";
 
     /**

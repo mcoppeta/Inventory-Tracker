@@ -51,7 +51,7 @@ public class InventoryScreen extends BorderPane {
         // New Category Button
         Button newCategoryButton = new Button("<New Category>");
         newCategoryButton.setOnAction(e -> {
-            NewCategoryAlert newCategoryAlert = new NewCategoryAlert();
+            NewCategoryScreen newCategoryAlert = new NewCategoryScreen();
             newCategoryAlert.display("New Category", "Enter Category Name",
                     "category name", "Add Category");
             Category newCategory = new Category(newCategoryAlert.getInput());
