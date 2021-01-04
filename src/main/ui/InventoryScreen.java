@@ -126,6 +126,7 @@ public class InventoryScreen extends BorderPane {
             }
         });
 
+        // Remove Item Button
         Button removeItemButton = new Button("Remove Item");
         removeItemButton.setOnAction(e -> {
             String selectedItemTitle = itemDisplay.getSelectionModel().getSelectedItem();
