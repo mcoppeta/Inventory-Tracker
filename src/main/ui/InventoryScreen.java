@@ -109,6 +109,7 @@ public class InventoryScreen extends BorderPane {
         ListView<String> itemDisplay = new ListView<>();
         itemDisplay.setItems(itemTitles);
 
+        //todo exing out new item window throws error
         // New Item Button
         Button newItemButton = new Button("New Item");
         newItemButton.setOnAction(e -> {
